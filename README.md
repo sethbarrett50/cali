@@ -1,124 +1,115 @@
-# cali
+# cali-workout
 
-`cali` is a small terminal-based calisthenics workout timer designed for morning workouts, Termux, tmux, and simple command-line use.
+`cali-workout` is a terminal-based calisthenics workout timer designed for morning workouts, Termux, tmux, and simple command-line use.
 
-It detects the current day of the week, loads the matching workout, runs timed exercise/rest intervals, and plays a local WAV sound alert through `mpv`.
+It detects the current day of the week, loads the matching workout, runs timed exercise/rest intervals, and plays a generated WAV sound alert through `mpv`.
 
-The project is intentionally lightweight:
+## Features
 
+- Terminal-based workout timer
+- Day-of-week workout selection
+- Warm-up, workout, rest, and cooldown timers
+- Pause, skip, and quit controls
+- Auto-generates `~/beep.wav` if missing
+- Uses `mpv` for sound alerts when available
+- Works well in Termux and tmux
 - No Python runtime dependencies
-- Works well inside `tmux`
-- Designed for Termux on Android
-- Includes a script to generate the `beep.wav` alert sound
-- Supports pause, skip, and quit controls during workouts
 
-## Project Layout
+## Installation
 
-```text
-.
-├── main.py
-├── Makefile
-├── pyproject.toml
-├── README.md
-├── scripts
-│   ├── beep_gen.py
-│   └── workout.py
-└── uv.lock
-```
+### Recommended: uvx
 
-## Requirements
-
-### Python
-
-This project requires Python 3.11 or newer.
-
-If using `uv`:
+After the package is published to PyPI:
 
 ```bash
-uv python install 3.11
-uv sync
-```
+uvx cali-workout
+````
 
-### Audio Playback
-
-For sound alerts, install `mpv`.
-
-On Termux:
+You can also run the shorter alias:
 
 ```bash
-pkg update
-pkg install mpv
+uvx --from cali-workout cali
 ```
 
-On Debian/Ubuntu:
-
-```bash
-sudo apt update
-sudo apt install mpv
-```
-
-The workout script expects a sound file at:
-
-```text
-~/beep.wav
-```
-
-You can generate this file using the included beep generator script.
-
-## Setup
+### Local development
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/sethbarrett50/cali.git
-cd cali
+git clone https://github.com/YOUR_USERNAME/cali-workout.git
+cd cali-workout
 ```
 
-Sync the project with `uv`:
+Install/sync with `uv`:
 
 ```bash
-uv sync
+uv sync --group dev
 ```
 
-Generate the alert sound:
+Run locally:
 
 ```bash
-uv run python scripts/beep_gen.py
+uv run cali-workout
 ```
 
-This should create:
+Or:
+
+```bash
+uv run cali
+```
+
+## Termux Setup
+
+Install the recommended system packages:
+
+```bash
+pkg update
+pkg install python uv mpv tmux
+```
+
+Then run:
+
+```bash
+uvx cali-workout
+```
+
+For local development in Termux:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cali-workout.git
+cd cali-workout
+uv sync --group dev
+uv run cali-workout
+```
+
+## Sound Alerts
+
+`cali-workout` automatically creates:
 
 ```text
 ~/beep.wav
 ```
 
-Test the sound manually:
+if it does not already exist.
+
+Sound playback uses:
 
 ```bash
 mpv --no-video --really-quiet ~/beep.wav
 ```
 
-If you hear the sound, the workout timer should be able to use it.
+If `mpv` is not installed, the app falls back to a terminal bell. The terminal bell may be silent in Termux, so `mpv` is recommended.
 
-## Running the Workout Timer
-
-Run the main workout script:
+To manually generate the beep file:
 
 ```bash
-uv run python scripts/workout.py
+uv run cali-workout --generate-beep
 ```
 
-Or, if you are not using `uv`:
+To manually test the sound:
 
 ```bash
-python scripts/workout.py
-```
-
-If you are using Termux/tmux, you can run:
-
-```bash
-tmux new -s workout
-uv run python scripts/workout.py
+mpv --no-video --really-quiet ~/beep.wav
 ```
 
 ## Controls
@@ -131,9 +122,7 @@ s = skip current exercise or rest
 q = quit
 ```
 
-## Weekly Workout Schedule
-
-The current schedule is:
+## Weekly Schedule
 
 ```text
 Monday    - Full Body Strength C
@@ -145,102 +134,70 @@ Saturday  - Longer Easy Session
 Sunday    - Recovery / Reset
 ```
 
-Each workout includes a warm-up, the main workout, rest timers, and a cooldown.
+## Development Commands
 
-## Sound Alerts
-
-Sound alerts use:
-
-```bash
-mpv --no-video --really-quiet ~/beep.wav
-```
-
-The project does not rely on Termux notifications, vibration, or text-to-speech because those can be inconsistent across Android devices and Termux installations.
-
-If `~/beep.wav` is missing or `mpv` is not installed, the script falls back to a terminal bell. The terminal bell may be silent in some terminals.
-
-## Generating the Beep Sound
-
-The repository includes:
-
-```text
-scripts/beep_gen.py
-```
-
-Run:
-
-```bash
-uv run python scripts/beep_gen.py
-```
-
-This generates a short WAV alert at:
-
-```text
-~/beep.wav
-```
-
-You can adjust the beep generator script if you want to change the sound duration, frequency, or volume.
-
-## Development
-
-Install development tools:
+Install development dependencies:
 
 ```bash
 uv sync --group dev
 ```
 
-Run Ruff linting:
+Run the app:
+
+```bash
+uv run cali-workout
+```
+
+Lint:
 
 ```bash
 uv run ruff check .
 ```
 
-Run Ruff formatting:
+Format:
 
 ```bash
 uv run ruff format .
 ```
 
-Run deptry:
+Check dependencies:
 
 ```bash
 uv run deptry .
 ```
 
-## Termux Notes
-
-Recommended Termux setup:
+Build:
 
 ```bash
-pkg update
-pkg install python uv mpv tmux
+uv build
 ```
 
-Then:
+Check distribution:
 
 ```bash
-git clone https://github.com/sethbarrett50/cali.git
-cd cali
-uv sync
-uv run python scripts/beep_gen.py
-uv run python scripts/workout.py
+uv run twine check dist/*
 ```
 
-To keep the workout running in a persistent terminal session:
+Publish to PyPI:
 
 ```bash
-tmux new -s workout
-uv run python scripts/workout.py
+uv publish
 ```
 
-Detach from tmux:
+## Build and Test Package Locally
 
-```text
-Ctrl-b d
-```
-
-Reattach later:
+Build the package:
 
 ```bash
-tmux attach -t workout
+uv build
 ```
+
+Test it with uvx from the local wheel:
+
+```bash
+uvx --from dist/cali_workout-0.1.0-py3-none-any.whl cali-workout
+```
+
+## License
+
+MIT License.

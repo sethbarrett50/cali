@@ -5,6 +5,10 @@ build/
 dist/
 wheels/
 *.egg-info
+coverage.xml
 
 # Virtual environments
 .venv
+
+# Beep sound
+*.wav

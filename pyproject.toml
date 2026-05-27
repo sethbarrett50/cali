@@ -58,10 +58,31 @@ packages = ["src/cali"]
 
 ignore = []
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-line-ending = "auto"
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "--cov=cali",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "unit: fast unit tests",
+    "integration: tests that exercise command/application flows",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["cali"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 75
+
 
 [tool.deptry]
 known_first_party = ["cali"]

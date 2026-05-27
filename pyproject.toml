@@ -1,10 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
 [project]
-name = "cali"
-version = "0.1.0"
-description = "Add your description here"
+name = "cali-workout"
+version = "1.0.0"
+description = "A terminal-based calisthenics workout timer with generated WAV sound alerts."
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    { name = "Seth Barrett" }
+]
+keywords = [
+    "calisthenics",
+    "workout",
+    "timer",
+    "terminal",
+    "termux",
+    "fitness",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Utilities",
+]
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/sethbarrett50/cali-workout"
+Issues = "https://github.com/sethbarrett50/cali-workout/issues"
+
+[project.scripts]
+cali-workout = "cali.cli:main"
+cali = "cali.cli:main"
 
 [dependency-groups]
 dev = [
@@ -12,3 +48,19 @@ dev = [
     "ruff>=0.15.14",
     "twine>=6.2.0",
 ]
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cali"]
+
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.deptry]
+known_first_party = ["cali"]

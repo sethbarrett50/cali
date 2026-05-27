@@ -1,0 +1,14 @@
+[project]
+name = "cali"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "deptry>=0.25.1",
+    "ruff>=0.15.14",
+    "twine>=6.2.0",
+]

@@ -76,7 +76,7 @@ android.debug: android.check ## Build Android debug APK with Buildozer
 	$(UV) run buildozer android debug
 
 android.clean: ## Clean Buildozer Android build artifacts
-	rm -rf .buildozer/android/platform
+	rm -rf .buildozer/android/platform/build-*
 	rm -rf .buildozer/android/app
 	rm -rf bin/*.apk bin/*.aab
 

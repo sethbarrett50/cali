@@ -54,8 +54,8 @@ dev = [
     { name = "twine", specifier = ">=6.2.0,<7" },
 ]
 mobile = [
-    { name = "buildozer", specifier = ">=1.6.0" },
-    { name = "kivy", specifier = ">=2.3.1" },
+    { name = "buildozer", specifier = ">=1.6.0,<2" },
+    { name = "kivy", specifier = ">=2.3.1,<3" },
 ]
 
 [[package]]

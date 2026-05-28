@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cali-workout"
-version = "1.0.0"
+version = "1.1.0"
 description = "A terminal-based calisthenics workout timer with generated WAV sound alerts."
 readme = "README.md"
 requires-python = ">=3.11"

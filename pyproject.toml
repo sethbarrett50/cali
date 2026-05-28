@@ -91,3 +91,6 @@ fail_under = 70
 
 [tool.deptry]
 known_first_party = ["cali"]
+
+[tool.deptry.per_rule_ignores]
+DEP004 = ["kivy"]

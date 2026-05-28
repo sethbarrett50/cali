@@ -7,6 +7,10 @@ target-version = "py310"
 unsafe-fixes   = true
 show-fixes     = true
 
+exclude = [
+    ".buildozer",
+]
+
 [lint]
 select = [
   "E", "F", "I", "TC",
